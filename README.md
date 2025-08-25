@@ -11,36 +11,47 @@ A Python-based web crawler that recursively visits pages on a website and genera
 - Comprehensive reporting with detailed statistics
 - Command-line interface with various options
 
-## Installation
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Usage
 
-### Basic Usage
-
 ```bash
-python main.py https://example.com
+docker run ghcr.io/managedkaos/site-crawler:main example.com
 ```
 
-### Advanced Usage
-
-```bash
-# Crawl with custom depth and delay
-python main.py https://example.com --max-depth 5 --delay 0.5
-
-# Save report to file
-python main.py https://example.com --output report.md
-```
-
-### Command Line Options
+## Command Line Options
 
 - `url`: The base URL to start crawling from (required)
 - `--max-depth`: Maximum depth to crawl (default: 3)
 - `--delay`: Delay between requests in seconds (default: 1.0)
 - `--output`: Output file for the report (default: print to console)
+
+```bash
+# Crawl with command line options
+docker run ghcr.io/managedkaos/site-crawler:main example.com --max-depth 2 --delay 0.5
+```
+
+## Capturing Reports with Volume Mounts
+
+To save reports to your local filesystem, use Docker volume mounts:
+
+```bash
+# Save report to file using volume mount
+docker run -v $(pwd):/work ghcr.io/managedkaos/site-crawler:main example.com --output=report.md
+```
+
+```bash
+# Save report to specific directory
+docker run -v /path/to/reports:/work ghcr.io/managedkaos/site-crawler:main example.com --output=site-report.md
+```
+
+```bash
+# Windows PowerShell
+docker run -v ${PWD}:/work ghcr.io/managedkaos/site-crawler:main example.com --output=report.md
+```
+
+```bash
+# Windows Command Prompt
+docker run -v %cd%:/work ghcr.io/managedkaos/site-crawler:main example.com --output=report.md
+```
 
 ## Example Output
 
