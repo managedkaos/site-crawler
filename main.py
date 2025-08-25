@@ -188,19 +188,35 @@ class SiteCrawler:
         report.append(f"# Site Crawler Report: {self.base_url}\n")
         if is_partial:
             report.append("⚠️ **PARTIAL REPORT** - Crawling was interrupted\n")
-        report.append("| Metric | Value |")
-        report.append("|--------|-------|")
-        report.append(f"| Base URL | {self.base_url} |")
-        report.append(f"| Domain | {self.domain} |")
-        report.append(
-            f"| Start Time | {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(self.start_time))} |"
-        )
-        report.append(f"| Duration | {duration:.2f} seconds |")
-        report.append(f"| Total Requests | {self.total_requests} |")
-        report.append(f"| Total Pages Visited | {len(self.visited_urls)} |")
-        report.append(
-            f"| Max Depth Reached | {max(self.url_depth.values()) if self.url_depth else 0} |"
-        )
+
+        # Create properly aligned table
+        metrics = [
+            ("Base URL", self.base_url),
+            ("Domain", self.domain),
+            (
+                "Start Time",
+                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.start_time)),
+            ),
+            ("Duration", f"{duration:.2f} seconds"),
+            ("Total Requests", str(self.total_requests)),
+            ("Total Pages Visited", str(len(self.visited_urls))),
+            (
+                "Max Depth Reached",
+                str(max(self.url_depth.values()) if self.url_depth else 0),
+            ),
+        ]
+
+        # Find the maximum width for the metric column
+        max_metric_width = max(len(metric) for metric, _ in metrics)
+
+        # Create the table header
+        report.append(f"| {'Metric':<{max_metric_width}} | Value |")
+        report.append(f"|{'-' * max_metric_width}-|--------|")
+
+        # Add each metric row
+        for metric, value in metrics:
+            report.append(f"| {metric:<{max_metric_width}} | {value} |")
+
         report.append("")
 
         # Status code summary
