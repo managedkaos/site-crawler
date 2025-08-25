@@ -23,7 +23,7 @@ class TestSiteCrawlerWithHttpBin(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures before each test method."""
         # Use a small delay to be respectful to the HTTP Bin service
-        self.crawler = SiteCrawler("https://httpbin.org", max_depth=1, delay=0.5)
+        self.crawler = SiteCrawler("https://httpbin.org", max_depth=1, delay=0)
 
     def test_http_200_response(self):
         """Test crawling a page that returns HTTP 200 OK."""
@@ -225,7 +225,7 @@ class TestSiteCrawlerWithHttpBin(unittest.TestCase):
         report = self.crawler.generate_report()
 
         # Verify report contains expected content
-        self.assertIn("SITE CRAWL REPORT: https://httpbin.org", report)
+        self.assertIn("Site Crawler Report: https://httpbin.org", report)
         self.assertIn("Total Pages Visited | 3", report)
         self.assertIn("HTTP 404 ERRORS", report)
         self.assertIn("HTTP 500 ERRORS", report)

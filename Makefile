@@ -17,6 +17,7 @@ help:
 	@echo "  black                    - format code with black"
 	@echo "  isort                    - sort imports with isort"
 	@echo "  test                     - run unit tests"
+	@echo "  integration-test         - run integration tests"
 	@echo "  build                    - build docker container"
 	@echo "  clean                    - clean up workspace and containers"
 
@@ -54,7 +55,10 @@ isort:
 	isort *.py
 
 test:
-	python -m unittest --verbose --failfast
+	python -m unittest --verbose --failfast ./tests/test_main.py
+
+integration-test:
+	python -m unittest --verbose --failfast ./tests/test_with_httpbin.py
 
 build: lint test
 	docker build --tag $(APP):$(TAG) .

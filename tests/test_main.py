@@ -257,7 +257,7 @@ class TestSiteCrawler(unittest.TestCase):
         report = crawler.generate_report()
 
         # Verify report contains expected content
-        self.assertIn("SITE CRAWL REPORT: https://example.com", report)
+        self.assertIn("Site Crawler Report: https://example.com", report)
         self.assertIn("Total Pages Visited | 2", report)
         self.assertIn("HTTP 404 ERRORS", report)
         self.assertIn("https://example.com/page1", report)
@@ -278,7 +278,7 @@ class TestSiteCrawler(unittest.TestCase):
         report = crawler.generate_report()
 
         # Verify report contains expected content even with no pages
-        self.assertIn("SITE CRAWL REPORT: https://example.com", report)
+        self.assertIn("Site Crawler Report: https://example.com", report)
         self.assertIn("Total Pages Visited | 0", report)
 
     def test_crawl_recursive_behavior(self):
